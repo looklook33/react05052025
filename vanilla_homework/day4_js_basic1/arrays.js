@@ -6,10 +6,7 @@ export function checkIfStringIsNumber(str) {
   //   returns a boolean indicating if the str is a number
   //   Example:
   //   '1' -> true, "a" -> false, "1a" -> false
-  if (typeof str === 'number'){
-    return true
-}
-return false
+  return !isNaN(str)
 }
 
 export function findAvgOfNums(arr) {
@@ -18,11 +15,19 @@ export function findAvgOfNums(arr) {
   //   Example: const arr = [1, '2', 3, '4', 5];
   //   Expected output: 3
   let res = 0;
+  let count = 0;
   for (let number of arr){
-      res +=Number(number)
+    if (typeof number === 'number'){
+      res+=number;
+      count++
+    }
   }
 
-  return res/arr.length;
+  if (count !== 0){
+    return res/count;
+  } else {
+    return 0;
+  }
 
 }
 
@@ -31,6 +36,9 @@ export function findAverageAge(people) {
   //   returns the average age of all the people.
   //   Do not use prototype methods
   //   Example: const people = [{name: 'John', age: 21}, {name: 'Alice', age: 25}];
+
+  if (people.length ===0) return 0;
+
   let res = 0;
   for (let person of people){
       res+=person.age
@@ -52,7 +60,13 @@ export function findAvgAgeByJob(people, job) {
           count++
       }
   }
-  return res/count;
+
+  if (count === 0){
+    return 0
+  } else {
+    return res/count;
+  }
+
 }
 
 export function findMaxNum(arr) {
@@ -60,7 +74,7 @@ export function findMaxNum(arr) {
   //   returns the maximum number in that array.
   //   Do not use Math.max
   //   Example: const arr = [1, 2, 3, 4, 5];
-  let max = -Infinity;
+  let max = 0;
   for (let number of arr){
       if (number > max){
           max = number
@@ -75,6 +89,7 @@ export function findLongestWord(str) {
   //   returns the longest word in that string.
   //   Hint: You can use String.prototype.split
   //   Example: const str = 'I love JavaScript';
+  if (str==="") return "";
 
   let strArr = str.split(' ')
   let longerst = 0;
@@ -110,9 +125,8 @@ export function bubbleSortArr1(num) {
   // Example: const num = [5, 3, 8, 2, 1];
   // Expected output: [1, 2, 3, 5, 8]
   let res = [...num];
-  let n = num.length;
-  for (var i = 0; i < n; i++) { 
-      for (var j = 0; j < n - i - 1; j++){
+  for (var i = 0; i < res.length; i++) { 
+      for (var j = 0; j < res.length - i - 1; j++){
           if (res[j]>res[j+1]){
               [res[j], res[j+1]] = [res[j+1], res[j]]
           }
@@ -124,6 +138,17 @@ export function bubbleSortArr1(num) {
 
 export function bubbleSortArr2(num) {
   // Same as above but this time returns the original array reference sorted.
+
+  for (let i = 0; i < num.length-1; i++){
+    for (let j = 1+i; j < num.length; j++){
+      if (num[j]<num[i]){
+        let temp = num[j];
+        num[j]=num[i];
+        num[i]=temp;
+      }
+    }
+  }
+  return num;
 }
 
 export function removeTypes(arr, typeToRemove) {
