@@ -5,4 +5,15 @@ const people = {
 };
 
 // get the average age of the people
-export const getAverageAge = (people) => {};
+export const getAverageAge = (people) => {
+
+ const values = Object.values(people);
+ let res = 0;
+  
+  for (let i = 0; i < values.length;i++){
+    console.log(values[i].age)
+    res+=values[i].age
+}
+
+return res/values.length;
+};

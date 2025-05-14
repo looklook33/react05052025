@@ -128,7 +128,7 @@ export function bubbleSortArr1(num) {
   for (var i = 0; i < res.length; i++) { 
       for (var j = 0; j < res.length - i - 1; j++){
           if (res[j]>res[j+1]){
-              [res[j], res[j+1]] = [res[j+1], res[j]]
+              [res[j], res[j+1]] = [res[j+1], res[j]] //destructor
           }
       }
 

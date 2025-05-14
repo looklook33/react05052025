@@ -31,11 +31,68 @@ export const TOPPINGS = {
 };
 
 export default class Pizza {
-  constructor(size, toppingCodes) {}
+ constructor(size, toppingCodes) {
+    this.size = size;
+    this.toppingCodes = toppingCodes;
+  }
 
-  getBaseCost() {}
+  getBaseCost() {
+    if (this.size === 'small'){
+      return 6.5;
+    } else if (this.size === 'medium'){
+      return 7.5
+    } else (this.size === 'large')
+      return 8.5
+  }
 
-  getTotalCost() {}
+  getTotalCost() {
+    let toppingCoast = 0;
 
-  getDescription() {}
+    for ( let topping of this.toppingCodes){
+        if (topping === 'p'){
+            toppingCoast+=1.5;
+        } else if (topping === 'g'){
+            toppingCoast+=0.86
+        } else if (topping === 'o'){
+            toppingCoast+=0.5
+        } else if (topping === 'bo'){
+            toppingCoast+=0.2
+        } else if (topping === 'm'){
+            toppingCoast+=0.82
+        } else if (topping === 'c')
+            toppingCoast+=0.77     
+    }
+
+
+    return this.getBaseCost() + toppingCoast;
+    
+  }
+
+  getDescription() {
+    const values = Object.values(this.toppingCodes) 
+    let topText=[]
+    // console.log("values:", values)
+    
+    for (let top of values){
+        if (top === 'p'){
+            topText.push('pepperoni')
+        } else if (top === 'g'){
+            topText.push('green pepper')
+        }  else if (top === 'o'){
+            topText.push('onion')
+        }  else if (top === 'bo'){
+            topText.push('black olive')
+        }  else if (top === 'm'){
+            topText.push('mushroom')
+        } else if (top === 'c'){
+            topText.push('cheese')
+        }
+    }
+
+    // console.log(topText)
+    return `A ${this.size} pizza with ${topText.join(', ')}.`
+  }
 }
+
+// const myPizza = new Pizza('medium', ['p','g'])
+// console.log(myPizza.getBaseCost())
