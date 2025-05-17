@@ -10,8 +10,8 @@
 
 export function createGreeting(greeting) {
 
-    return function (name){
-        return greeting + " "+name;
+    return function (name) {
+        return greeting + " " + name;
     }
 }
 
@@ -27,17 +27,17 @@ export function createGreeting(greeting) {
 // console.log(counter.getValue());  // Outputs: 2
 
 export function createCounter() {
-        let counter = 0;
-   return {
-        increment(){
+    let counter = 0;
+    return {
+        increment() {
             counter++
-        return counter
+            return counter
 
-    },
+        },
         getValue() {
-        return counter;
-    },
-}
+            return counter;
+        },
+    }
 }
 
 // Exercise 3: Function Store
@@ -52,13 +52,13 @@ export function createCounter() {
 // console.log(store.run("add", 5, 7)); // Outputs: 12
 
 export function functionStore() {
-        const funcs = {};
+    const funcs = {};
 
     return {
-        store(key, fn){
-            funcs[key] =fn;
+        store(key, fn) {
+            funcs[key] = fn;
         },
-        run(key, ...args){
+        run(key, ...args) {
             const fn = funcs[key]
             return fn(...args)
 
@@ -78,13 +78,14 @@ export function functionStore() {
 
 export function createPerson(name) {
     return {
-        getName () {
-        return name;
+        getName() {
+            return name;
         },
         setName(newName) {
-        name = newName;
+            name = newName;
+            return name;
         }
-    } 
+    }
 }
 
 // Exercise 5: Limited Call Function
@@ -104,16 +105,16 @@ export function createPerson(name) {
 // limitedHello(); // No output, subsequent calls are ignored
 
 export function createLimitedCallFunction(fn, limit) {
-        let callTime = 0
-  //  console.log(callTime)
-    
-    return function (){
-      if (limit>callTime){
-        callTime++
-      //  console.log(callTime)
-        return fn();
+    let callTime = 0
+    //  console.log(callTime)
+
+    return function () {
+        if (limit > callTime) {
+            callTime++
+            //  console.log(callTime)
+            return fn();
+        }
     }
-}
 }
 
 // Exercise 6: Rate Limiter
@@ -133,14 +134,19 @@ export function createLimitedCallFunction(fn, limit) {
 // limitedLog("Again"); // This call is ignored
 
 export function createRateLimiter(fn, limit, interval) {
-      let callTime = 0;
-      setTimeout(()=>{
-        return function (message){
-    if (limit>callTime){
-      callTime++;
-      setTimeout(()=>{return fn(message)},interval)
+    let callTime = 0;
+    let shortWait = false;
+
+    return function (message) {
+        if (shortWait) return;
+
+        if (limit > callTime) {
+            callTime++;
+            fn()
+            setTimeout(() => {
+                shortWait = false;
+            }, interval)
+        }
     }
-  }
-      },limit)
-  
+
 }
