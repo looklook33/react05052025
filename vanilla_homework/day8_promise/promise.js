@@ -1,11 +1,16 @@
 export const fetchPosts = async () => {
   //fetch posts from "https://jsonplaceholder.typicode.com/posts"
   //return the posts
+  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const data = await res.json();
+  return data;
 };
 
 export const fetchPostById = async (id) => {
   //fetch a post by id from "https://jsonplaceholder.typicode.com/posts/${id}"
   //return the post
+  const res = await fetch("https://jsonplaceholder.typicode.com/posts/${id}");
+  return res;
 };
 
 export const sequentialPromise = async (promises, order) => {
