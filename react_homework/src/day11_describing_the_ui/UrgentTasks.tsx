@@ -12,11 +12,16 @@ export interface TaskType {
 //   { id: 5, name: "Complete React tutorial", priority: "urgent" },
 // ];
 
+
 export default function UrgentTasks({ tasks }: { tasks: TaskType[] }) {
+  const UrgentTasks = tasks.filter((test)=>test.priority === 'urgent')
   return (
     <div>
       <h1>Urgent Tasks</h1>
       {/* Only displays the urgent tasks */}
+      {UrgentTasks.map((task)=>(
+        <li key={task.id}>{task.name}</li>
+      ))}
       <ul></ul>
     </div>
   );
