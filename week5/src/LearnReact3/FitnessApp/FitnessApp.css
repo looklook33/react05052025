@@ -1,0 +1,66 @@
+.container {
+  width: 400px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 6px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+input, select {
+  padding: 8px;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.add-button {
+  width: 100%;
+  background-color: green;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  cursor: pointer;
+}
+
+.goal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.goal-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.achieve-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.achieved-label {
+  color: green;
+  font-weight: bold;
+}
