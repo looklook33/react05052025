@@ -37,9 +37,6 @@ const userRouter = require('./routes/user')
 app.use('/users', userRouter)
 
 
-// 6/17/class 
-
-
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
