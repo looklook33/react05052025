@@ -1,25 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { createTodo, fetchTodos } from "../redux/actions";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { generateId } from "../util";
+import { fetchTodos, createTodo } from "../redux/actions";
 
-function TodoList() {
-  const todos = useSelector((state) => state.todos);
+export default function TodoList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const todos = useSelector((state) => state.todos);
   const [task, setTask] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
 
   useEffect(() => {
     dispatch(fetchTodos());
-  }, []);
+  }, [dispatch]);
 
   const handleAdd = () => {
-    const id = generateId();
-    const newTodo = { id, task, date, description, completed: false };
+    if (!task || !date) return alert("Task and date are required.");
+    const newTodo = { task, date, description, completed: false };
     dispatch(createTodo(newTodo));
     setTask("");
     setDate("");
@@ -27,12 +25,26 @@ function TodoList() {
   };
 
   return (
-    <>
+    <div>
+      <h2>Todo List</h2>
+      <ul className="todo-list">
+        {todos.map((todo) => (
+          <li
+            key={todo.id}
+            onClick={() => navigate(`/todos/${todo.id}`)}
+            style={{ cursor: "pointer" }}
+          >
+            {todo.task} - {todo.completed ? "✔️" : "❌"}
+          </li>
+        ))}
+      </ul>
+
+      <h3>Add Todo</h3>
       <div className="input-container">
         <input
           value={task}
           onChange={(e) => setTask(e.target.value)}
-          placeholder="Add task..."
+          placeholder="Task"
         />
         <input
           type="date"
@@ -40,28 +52,12 @@ function TodoList() {
           onChange={(e) => setDate(e.target.value)}
         />
         <input
-          type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Discription..."
+          placeholder="Description"
         />
-        <button onClick={handleAdd}>+</button>
+        <button onClick={handleAdd}>Add</button>
       </div>
-      <div>
-        <h2>To Do List</h2>
-        <ul className="todo-list">
-          {todos.map((todo) => {
-            return (
-              <li key={todo.id} onClick={() => navigate(`/todos/${todo.id}`)}>
-                {todo.task} -{" "}
-                {todo.completed ? "COMPLETED✔️" : "NOT COMPLTED❌"}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </>
+    </div>
   );
 }
-
-export default TodoList;

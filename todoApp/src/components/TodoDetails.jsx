@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { deleteTodo, updateTodo } from "../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
 
 export default function TodoDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const todo = useSelector((state) => state.todos.find((t) => t.id === id));
+  const todo = useSelector((state) =>
+    state.todos.find((t) => t.id === Number(id))
+  );
 
   const [editable, setEditable] = useState(false);
   const [editedTodo, setEditedTodo] = useState(todo);
@@ -22,17 +24,18 @@ export default function TodoDetails() {
   };
 
   const handleDelete = () => {
-    dispatch(deleteTodo(id));
+    dispatch(deleteTodo(todo.id));
     navigate("/todos");
   };
 
-  if (!todo) return <p>Loading...</p>;
+  if (!todo) return <p>Todo not found.</p>;
 
   return (
     <div>
       <h2>Todo Details</h2>
+
       <p>
-        <strong>Task:</strong>
+        <strong>Task:</strong>{" "}
         {editable ? (
           <input
             value={editedTodo.task}
@@ -46,19 +49,20 @@ export default function TodoDetails() {
       </p>
 
       <p>
-        <strong>Completed:</strong> {todo.completed ? "YES" : "NO"}
+        <strong>Completed:</strong> {todo.completed ? "Yes" : "No"}{" "}
         <button
-          onClick={() => {
+          onClick={() =>
             dispatch(
               updateTodo(todo.id, { ...todo, completed: !todo.completed })
-            );
-          }}
+            )
+          }
         >
-          Update Complete
+          Toggle
         </button>
       </p>
+
       <p>
-        <strong>Date:</strong>
+        <strong>Date:</strong>{" "}
         {editable ? (
           <input
             type="date"
@@ -71,8 +75,9 @@ export default function TodoDetails() {
           todo.date
         )}
       </p>
+
       <p>
-        <strong>Description:</strong>
+        <strong>Description:</strong>{" "}
         {editable ? (
           <textarea
             value={editedTodo.description}
